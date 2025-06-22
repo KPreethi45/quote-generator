@@ -108,7 +108,7 @@ function displayQuote(quote) {
 function getQuote() {
   currentIndex++;
   if (currentIndex >= quotes.length) {
-    currentIndex = 0; // Loop to first if you reach end
+    currentIndex = 0;
   }
   displayQuote(quotes[currentIndex]);
 }
@@ -121,5 +121,26 @@ function goBack() {
     displayQuote(quotes[currentIndex]);
   } else {
     alert("You're at the first quote!");
+  }
+}
+
+function copyQuote() {
+  const quote = quotes[currentIndex];
+  const text = "${quote.text}" + " — " + quote.author;
+  navigator.clipboard.writeText(text).then(() => {
+    alert("Quote copied to clipboard!");
+  });
+}
+
+function shareQuote() {
+  const quote = quotes[currentIndex];
+  const text = "${quote.text}" + " — " + quote.author;
+  if (navigator.share) {
+    navigator.share({
+      title: "Motivational Quote",
+      text: text
+    });
+  } else {
+    alert("Sharing is not supported on this device.");
   }
 }
